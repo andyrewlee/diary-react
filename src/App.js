@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+const entries = [
+  {
+    title: 'My day was awesome!',
+    content: 'The day was amazing because I had tacos.',
+  },
+  {
+    title: 'Same old day',
+    content: 'Same food, same job, same day...',
+  },
+];
+
+const App = () => {
+  const [diaryEntries, setDiaryEntries] = useState(entries);
+  const [newEntryValue, setNewEntryValue] = useState('');
+
+  const renderEntries = () => {
+    return diaryEntries.map((entry) => {
+      return (
+        <div class="diary-entry">
+          <h2>{entry.title}</h2>
+          <p>{entry.content}</p>
+        </div> 
+      )
+    })
+  };
+
+  const handleOnChange = (event) => {
+    console.log('event', event.target.value);
+    setNewEntryValue(event.target.value);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {renderEntries()}
+      <div>
+        <textarea value={newEntryValue} onChange={handleOnChange} />
+        <button>Submit</button>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
