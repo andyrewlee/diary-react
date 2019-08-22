@@ -14,6 +14,7 @@ const entries = [
 const App = () => {
   const [diaryEntries, setDiaryEntries] = useState(entries);
   const [newEntryValue, setNewEntryValue] = useState('');
+  const [newEntryTitle, setNewEntryTitle] = useState('');
 
   const renderEntries = () => {
     return diaryEntries.map((entry, index) => {
@@ -32,12 +33,18 @@ const App = () => {
     setNewEntryValue(event.target.value);
   };
 
+  const handleTitleChange = (event) => {
+    setNewEntryTitle(event.target.value);
+  };
+
   const handleClick = () => {
     const newDiaryEntries = [...diaryEntries];
     newDiaryEntries.push({
-      title: 'hm',
+      title: newEntryTitle,
       content: newEntryValue,
     })
+    setNewEntryTitle('');
+    setNewEntryValue('');
     setDiaryEntries(newDiaryEntries);
   };
 
@@ -45,6 +52,7 @@ const App = () => {
     <div className="App">
       {renderEntries()}
       <div>
+        <input type="text" value={newEntryTitle} onChange={handleTitleChange} />
         <textarea value={newEntryValue} onChange={handleOnChange} />
         <button onClick={handleClick}>Submit</button>
       </div>
