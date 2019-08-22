@@ -16,9 +16,11 @@ const App = () => {
   const [newEntryValue, setNewEntryValue] = useState('');
 
   const renderEntries = () => {
-    return diaryEntries.map((entry) => {
+    return diaryEntries.map((entry, index) => {
+      const keyVal = `${entry.title}-${index}`;
+
       return (
-        <div class="diary-entry">
+        <div key={keyVal} className="diary-entry">
           <h2>{entry.title}</h2>
           <p>{entry.content}</p>
         </div> 
@@ -27,8 +29,16 @@ const App = () => {
   };
 
   const handleOnChange = (event) => {
-    console.log('event', event.target.value);
     setNewEntryValue(event.target.value);
+  };
+
+  const handleClick = () => {
+    const newDiaryEntries = [...diaryEntries];
+    newDiaryEntries.push({
+      title: 'hm',
+      content: newEntryValue,
+    })
+    setDiaryEntries(newDiaryEntries);
   };
 
   return (
@@ -36,7 +46,7 @@ const App = () => {
       {renderEntries()}
       <div>
         <textarea value={newEntryValue} onChange={handleOnChange} />
-        <button>Submit</button>
+        <button onClick={handleClick}>Submit</button>
       </div>
     </div>
   );
